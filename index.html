@@ -18,65 +18,64 @@
     --border-strong: rgba(0,0,0,0.12);
   }
   *{box-sizing:border-box}
-  html,body{height:100%; margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:linear-gradient(180deg,var(--bg),#fbfbff); color:var(--text); -webkit-font-smoothing:antialiased;}
+  html,body{height:100%; margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:linear-gradient(180deg,var(--bg),#fbfbff); color:var(--text); -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:100%;}
+  html, body { overflow-x: hidden; }
 
-  /* center frame and keep everything visible in one viewport */
   .page{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:16px;}
-  .container{width:100%; max-width:var(--maxw);} 
+  .container{width:100%; max-width:var(--maxw);}
 
-  /* gameCard: grid layout with fixed header/control/footer and a flexible chat area that scrolls; card itself can scroll when viewport is small */
-  .gameCard{background:var(--card); border-radius:18px; padding:12px; box-shadow:var(--shadow-soft); overflow:auto; display:grid; grid-template-rows:auto 1fr auto auto; gap:12px; position:relative; max-height:calc(100vh - 32px); border:1px solid var(--border-strong); margin:auto}
+  .gameCard{background:var(--card); border-radius:18px; padding:12px; box-shadow:var(--shadow-soft); overflow:auto; display:grid; grid-template-rows:auto 1fr auto auto; gap:12px; position:relative; max-height:calc(100vh - 32px); border:1px solid var(--border-strong); margin:auto; width:100%; max-width:100%; }
   h1{margin:0; font-size:20px; text-align:center}
   p.lead{margin:0;color:var(--muted); font-size:14px; text-align:center}
 
-  /* homepage layout: title centered, avatars centered below, minimal outer border */
+  /* HOME */
   #home{display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; padding:18px 12px; min-height:220px}
   .home-avatars{ display:flex; gap:14px; align-items:center; justify-content:center; flex-wrap:wrap }
   .home-avatar{ width:64px; height:64px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:28px; box-shadow:0 6px 18px rgba(36,19,50,0.04); border:1px solid var(--border-strong); background:linear-gradient(135deg,#ffffff, #fffaf6); }
   .home-avatar .label{ display:block; font-size:12px; color:var(--muted); margin-top:6px; text-align:center }
   #startBtn{ padding:12px 18px; border-radius:12px; font-weight:800; background:linear-gradient(90deg,#ffd6a5,#fff0d6); color:var(--text); border:1px solid rgba(0,0,0,0.06); box-shadow:0 8px 26px rgba(111,66,193,0.06); cursor:pointer }
 
-  /* header */
-  #opponentHeader{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px; border:1px solid var(--border-strong)}
-  .op-left{display:flex;align-items:center;gap:12px}
-  .op-avatar{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px; box-shadow:0 6px 18px rgba(36,19,50,0.04); border:1px solid var(--border-strong);}
+  /* header - desktop layout: left avatar/name, center title, right score+sound */
+  #opponentHeader{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px; border:1px solid var(--border-strong); background:linear-gradient(180deg,#fff,#fffaf6); flex-wrap:nowrap}
+  .op-left{display:flex;align-items:center;gap:12px; flex-shrink:0; min-width:0}
+  .op-avatar{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px; box-shadow:0 6px 18px rgba(36,19,50,0.04); border:1px solid var(--border-strong); flex-shrink:0;}
   .op-name{font-weight:800}
   .opSubtitle{font-size:13px;color:var(--muted); font-weight:700}
   .op-center{flex:1; text-align:center; min-width:0}
   .op-center h2{margin:0; font-size:16px; white-space:normal; word-break:break-word}
-  .op-right{ min-width:160px; text-align:right; display:flex; gap:8px; align-items:center; justify-content:flex-end }
+  .op-right{ min-width:160px; text-align:right; display:flex; gap:8px; align-items:center; justify-content:flex-end; flex-shrink:0 }
 
-  /* sound button inline with stable layout */
-  .sound-inline{ min-width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; border:1px solid var(--border-strong); background:var(--card); cursor:pointer; font-size:18px; padding:6px }
+  /* sound button inline */
+  .sound-inline{ min-width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; border:1px solid var(--border-strong); background:var(--card); cursor:pointer; font-size:18px; padding:6px; flex-shrink:0; }
   .sound-inline.muted{ background:#fff }
   .sound-inline.on{ background: linear-gradient(90deg,#c7b8ff,#e6d8ff); }
 
-  /* score - larger */
+  /* score */
   #scoreDisplay{ background:#fff; border-radius:12px; padding:8px 12px; box-shadow:var(--shadow-soft); font-weight:900; font-size:16px; color:var(--text); border:1px solid var(--border-strong); }
 
   /* chat */
-  .chatAreaWrap{border-radius:12px; overflow:hidden; border:1px solid var(--border-strong); background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,1)); display:flex; flex-direction:column; min-height:0 }
-  .chat{padding:12px 14px; overflow:auto; background:transparent; display:block; min-height:0; -webkit-overflow-scrolling:touch}
-  .msgRow{display:flex; margin:8px 0; align-items:flex-end; gap:10px}
-  .msgBubble{padding:10px 14px; border-radius:14px; max-width:72%; word-break:break-word; box-shadow: 0 6px 18px rgba(2,6,23,0.04); border:1px solid rgba(0,0,0,0.06);}
-  .npcBubble{ color:var(--text); border-top-left-radius:6px; }
-  .playerBubble{ background: linear-gradient(180deg, var(--player-bubble-bg), #cfeeff); color:var(--player-text); margin-left:auto; border-top-right-radius:6px; }
+  .chatAreaWrap{border-radius:12px; overflow:hidden; border:1px solid var(--border-strong); background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,1)); display:flex; flex-direction:column; min-height:0; width:100%; overflow-x:hidden; }
+  .chat{padding:12px 14px; overflow:auto; background:transparent; display:block; min-height:0; -webkit-overflow-scrolling:touch; width:100%; }
+  .msgRow{display:flex; margin:8px 0; align-items:flex-end; gap:10px; width:100%}
+  .msgBubble{padding:10px 14px; border-radius:14px; max-width:72%; word-break:break-word; box-shadow: 0 6px 18px rgba(2,6,23,0.04); border:1px solid rgba(0,0,0,0.06); overflow-wrap: break-word;}
+  .msgBubble { max-width: calc(100vw - 140px); }
+  .playerBubble{ background: linear-gradient(180deg, var(--player-bubble-bg), #cfeeff); color:var(--player-text); margin-left:auto; border-top-right-radius:6px; max-width: calc(100vw - 120px); }
 
   /* typing bubble */
-  .typingBubble{ border-radius:12px; padding:10px 12px; display:inline-flex; align-items:center; gap:10px; border:2px solid rgba(0,0,0,0.06); }
+  .typingBubble{ border-radius:12px; padding:10px 12px; display:inline-flex; align-items:center; gap:10px; border:2px solid rgba(0,0,0,0.06); max-width: calc(100vw - 140px); }
   .typingText{font-size:13px;color:var(--muted); font-weight:700}
   .dots{display:inline-flex; gap:6px}
   .dots span{ display:inline-block; width:8px; height:8px; border-radius:50%; background:rgba(36,19,50,0.16); transform:translateY(0); animation:dot 1s infinite; }
-  .dots span:nth-child(2){ animation-delay:0.12s; } .dots span:nth-child(3){ animation-delay:0.24s; }
   @keyframes dot{ 0%{opacity:0.3; transform:translateY(0);} 50%{opacity:1; transform:translateY(-6px);} 100%{opacity:0.3; transform:translateY(0);} }
 
-  /* control - allow wrapping on small screens so placeholder never gets cut */
+  /* controls */
   #controlArea{display:flex; gap:10px; align-items:center; padding:10px 0; flex-wrap:wrap}
-  #playerInput{flex:1; min-width:0; padding:10px 12px;border-radius:12px;border:1px solid var(--border-strong); background:linear-gradient(180deg,#fff,#fffaf8); caret-color:var(--text)}
+  #playerInput{flex:1; min-width:0; padding:12px 14px;border-radius:12px;border:1px solid var(--border-strong); background:linear-gradient(180deg,#fff,#fffaf8); caret-color:var(--text); font-size:15px}
   #playerInput.noCaret{ caret-color: transparent; }
   #sendBtn{background:linear-gradient(90deg,#c7b8ff,#e6d8ff); color:var(--text); border:1px solid var(--border-strong); padding:10px 14px; border-radius:12px}
   button.small{padding:8px 10px; border-radius:10px; display:inline-flex; gap:8px; align-items:center; cursor:pointer; border:1px solid var(--border-strong); background:var(--card)}
   .btnIcon{width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:14px; border:1px solid var(--border-strong)}
+  .btnLabel{ font-weight:800; margin-left:8px; font-size:14px; white-space:nowrap; }
   .safeIcon{background:linear-gradient(90deg,#b8f2d0,#9fe9c6); color:#064e3b}
   .dangerIcon{background:linear-gradient(90deg,#ffd6d6,#ffb4b4); color:#7f1d1d}
   .small.btn-correct{ background:linear-gradient(90deg,#d7fbe6,#b8f2d0); border-color:rgba(30,150,110,0.22); }
@@ -84,12 +83,11 @@
 
   /* footer */
   .gameFooter{display:flex; gap:12px; align-items:flex-start; margin-top:8px; padding:6px}
-  /* slightly less rounded */
   #dangerBoard{flex:1; padding:12px; background:linear-gradient(180deg,#fff7f7,#fff5f5); border:1px solid rgba(239,68,68,0.06); border-radius:12px; min-height:64px; color:#7f1d1d; overflow:auto; white-space:pre-wrap; word-break:break-word; max-height:160px}
   @media (max-width:520px){ #dangerBoard{ max-height:120px; width:100%; } .gameFooter{flex-direction:column;} }
   #levelEndNotice{min-width:220px; padding:12px; border-radius:12px; background:linear-gradient(180deg,#f3f0ff,#f9f7ff); border:1px solid rgba(111,66,193,0.06); color:var(--text); font-weight:700; display:none}
 
-  /* next button fixed for desktop, static for small screens */
+  /* next button */
   #nextBtn{position:fixed; right:22px; bottom:22px; z-index:200; display:none; padding:12px 20px; border-radius:14px; border:1px solid var(--border-strong); background:linear-gradient(90deg,#c7b8ff,#e6d8ff); color:var(--text); box-shadow:0 18px 46px rgba(111,66,193,0.12); font-weight:800}
   @media (max-width:520px){ #nextBtn{ position:static; display:none; margin-top:8px; align-self:flex-end } .op-center h2{ white-space:normal; } .op-right{ min-width:0; flex-direction:row-reverse; gap:8px } #scoreDisplay{ font-size:13px } }
 
@@ -99,60 +97,31 @@
   #confetti{ position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:450 }
   .confetti-piece{ position:fixed; will-change:transform, top, opacity; border-radius:2px }
 
-  @media (max-width:860px){ .chat{height:auto} .gameCard{padding:12px} .op-center h2{ font-size:15px } }
-  @media (max-width:520px){ .chat{height:auto} .op-avatar{width:44px;height:44px} .op-center h2{ font-size:14px } }
+  /* MOBILE: stack header to save vertical space; title single-line */
+  @media (max-width:520px){
+    #opponentHeader{ flex-direction:column; align-items:center; gap:8px; padding:10px; }
+    .op-center{ order:0; width:100%; }
+    .op-center h2{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:15px; }
+    .op-left{ order:1; display:flex; width:100%; justify-content:center; gap:8px; }
+    .op-right{ order:2; display:flex; width:100%; justify-content:center; gap:8px; }
+    .btnLabel{ margin-left:6px; font-size:13px; }
+    .btnIcon{ width:26px; height:26px; font-size:13px; }
+    #playerInput{ font-size:15px; padding:10px 12px; }
+    #controlArea{ gap:8px; align-items:center; }
+    .msgBubble, .typingBubble { max-width: calc(100vw - 60px); }
+  }
 
-  /* --- Responsive fixes for mobile landscape / horizontal overflow --- */
-  /* Prevent page-level horizontal scroll */
-  html,body { overflow-x: hidden; }
-
-  /* ensure card never exceeds viewport width */
-  .container, .gameCard { width: 100%; max-width: 100%; }
-
-  /* header: allow center title to shrink / wrap, right side to not force overflow */
-  #opponentHeader { gap:10px; align-items:center; }
-  .op-center { min-width: 0; padding: 0 6px; }
-  .op-center h2 { font-size: 15px; word-break: break-word; overflow-wrap: break-word; white-space: normal; }
-
-  /* allow right-aligned items (score + sound) to shrink and wrap */
-  .op-right { min-width: 0; display:flex; gap:8px; align-items:center; justify-content:flex-end; flex-shrink:1; }
-
-  /* ensure avatar doesn't force width; allow shrink */
-  .op-left { min-width: 0; flex-shrink:0; }
-
-  /* chat area - make sure long text wraps and chat area fits horizontally */
-  .chatAreaWrap, .chat { width:100%; box-sizing:border-box; }
-  .msgBubble, .typingBubble { word-break: break-word; overflow-wrap: break-word; max-width: 85vw; }
-
-  /* control area - allow wrapping and ensure buttons don't overflow */
-  #controlArea { gap:8px; align-items:center; flex-wrap:wrap; padding-bottom:8px; }
-  #playerInput { min-width: 120px; max-width: calc(100% - 220px); box-sizing: border-box; }
-
-  /* when viewport is narrow or in landscape on small devices, make layout stack and avoid fixed next button */
+  /* landscape small safety */
   @media (max-width:760px) and (orientation: landscape) {
-    .op-center h2 { font-size:14px; }
-    #nextBtn { position: static !important; right: auto; bottom: auto; margin-top:10px; display:none; align-self:flex-end; }
-    .gameCard { padding-bottom: 12px; }
-    .op-right { flex-direction: row-reverse; gap:6px; }
-    #scoreDisplay { white-space: nowrap; font-size:13px; }
-    .msgBubble { max-width: 78vw; }
-    #playerInput { max-width: calc(100% - 160px); }
+    #opponentHeader { gap:6px; padding:8px; }
+    .op-center h2 { font-size:14px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+    .msgBubble{ max-width: calc(100vw - 80px); }
+    #playerInput{ max-width: calc(100% - 140px); }
+    #nextBtn{ position:static; }
   }
 
-  /* small screens portrait: keep things compact */
-  @media (max-width:520px) {
-    .home-avatar { width:56px; height:56px; font-size:24px; }
-    .op-avatar { width:44px; height:44px; }
-    #scoreDisplay { font-size:13px; padding:6px 10px; }
-    .msgBubble { max-width: 80vw; }
-  }
-
-  /* ensure sound button won't overlap avatar; give it a small margin */
-  .sound-inline { margin-left:6px; flex-shrink:0; }
-
-  /* small visual hint for safeFocus (if used) */
-  #playerInput.focus-hint { box-shadow: 0 0 0 6px rgba(99,102,241,0.08); transition: box-shadow 0.28s; }
-
+  /* small visual hint for safeFocus */
+  #playerInput.focus-hint { box-shadow: 0 0 0 8px rgba(99,102,241,0.08); transition: box-shadow 0.28s; }
 </style>
 </head>
 <body>
@@ -167,9 +136,7 @@
           <p class="lead">練習判斷對話中的風險，保護個人資料與隱私。</p>
         </div>
 
-        <div class="home-avatars" id="homeList" aria-hidden="false">
-          <!-- avatars inserted by JS: each has full logo background + border -->
-        </div>
+        <div class="home-avatars" id="homeList" aria-hidden="false"></div>
 
         <div style="display:flex; gap:12px; justify-content:center; margin-top:8px">
           <button id="startBtn">開始遊戲</button>
@@ -179,6 +146,7 @@
       <!-- GAME -->
       <div id="game" style="display:none" aria-labelledby="levelTitle">
 
+        <!-- DESKTOP ORDER: left (avatar/name), center (title), right (score/sound) -->
         <div id="opponentHeader">
           <div class="op-left">
             <div id="opAvatar" class="op-avatar">🐱</div>
@@ -199,8 +167,8 @@
         </div>
 
         <div id="controlArea">
-          <button id="safeBtn" class="small"><span class="btnIcon safeIcon">✓</span> <span class="btnLabel">安全</span></button>
-          <button id="dangerBtn" class="small"><span class="btnIcon dangerIcon">!</span> <span class="btnLabel">危險</span></button>
+          <button id="safeBtn" class="small"><span class="btnIcon safeIcon">✓</span><span class="btnLabel">安全</span></button>
+          <button id="dangerBtn" class="small"><span class="btnIcon dangerIcon">!</span><span class="btnLabel">危險</span></button>
           <input id="playerInput" type="text" class="noCaret" placeholder="先按安全或危險，再輸入回覆" disabled />
           <button id="sendBtn">送出</button>
         </div>
@@ -227,10 +195,9 @@
   </div>
 </div>
 
-<!-- confetti -->
 <div id="confetti"></div>
 
-<!-- Audios (請把 mp3 上傳到 assets/audio/) -->
+<!-- Audios -->
 <audio id="bgMusic" loop src="assets/audio/strawberry-358303.mp3"></audio>
 <audio id="correctSound" src="assets/audio/correct.mp3"></audio>
 <audio id="wrongSound" src="assets/audio/error.mp3"></audio>
@@ -238,7 +205,7 @@
 <audio id="multiPop" src="assets/audio/multi-pop.mp3"></audio>
 
 <script>
-/* data */
+/* 關卡資料（不變） */
 const levelData = [
   { title:'第一關', opponent:{name:'網友1', avatar:'🐱', color:'#ffcced'}, dialogues:[
       { text:'嗨！剛剛看到你分享的跑步照片，很有活力，你常去哪裡跑步？', danger:false },
@@ -267,7 +234,6 @@ const levelData = [
     ], answers:[], score:0 }
 ];
 
-/* state */
 let currentLevel=0, currentDialogue=0, choiceMade=false, cumulativeScore=0;
 let soundEnabled=false, confettiActive=false;
 
@@ -298,28 +264,25 @@ const confettiEl=document.getElementById('confetti');
 function darken(hex, amt){ const h=hex.replace('#',''); const bigint=parseInt(h.length===3 ? h.split('').map(c=>c+c).join('') : h,16); const r=(bigint>>16)&255,g=(bigint>>8)&255,b=bigint&255; const nr=Math.max(0,Math.min(255,Math.round(r*(1-amt)))), ng=Math.max(0,Math.min(255,Math.round(g*(1-amt)))), nb=Math.max(0,Math.min(255,Math.round(b*(1-amt)))); return `rgba(${nr},${ng},${nb},1)`; }
 function rgba(hex,a){ const h=hex.replace('#',''); const bigint=parseInt(h.length===3 ? h.split('').map(c=>c+c).join('') : h,16); const r=(bigint>>16)&255,g=(bigint>>8)&255,b=bigint&255; return `rgba(${r},${g},${b},${a})`; }
 
-/* is mobile helper and safe focus/scroll to avoid mobile keyboard jumping */
+/* auto-focus helper: short delay + scroll-into-view protection */
 function isMobileDevice(){ return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent); }
-function safeFocus(el){
-  try{
-    if(!el) return;
-    if(isMobileDevice() && window.innerWidth <= 520){
-      el.classList.add('focus-hint');
-      setTimeout(()=> el.classList.remove('focus-hint'), 3000);
-      return;
+function safeFocus(el, opts = { delay: 300 }){
+  if(!el) return;
+  const d = typeof opts.delay === 'number' ? opts.delay : 300;
+  setTimeout(()=>{
+    try{
+      el.focus();
+      if(typeof el.scrollIntoView === 'function'){
+        el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+      }
+      if(isMobileDevice()){
+        el.classList.add('focus-hint');
+        setTimeout(()=> el.classList.remove('focus-hint'), 1500);
+      }
+    }catch(e){
+      try{ el.focus(); }catch(err){}
     }
-    if(el.focus){
-      try{ el.focus({preventScroll:true}); } catch(e){ el.focus(); }
-    }
-  }catch(e){}
-}
-function safeScrollGameCardToBottom(){
-  try{
-    const nearBottom = (gameCard.scrollHeight - gameCard.scrollTop - gameCard.clientHeight) < 120;
-    if(nearBottom){
-      gameCard.scrollTop = gameCard.scrollHeight;
-    }
-  }catch(e){}
+  }, d);
 }
 
 /* render home avatars */
@@ -330,7 +293,7 @@ function showHome(){ homeEl.style.display='flex'; gameEl.style.display='none'; r
 function showGame(){ homeEl.style.display='none'; gameEl.style.display='block'; resultEl.style.display='none'; scoreDisplay.style.display='block'; soundBtn.style.display='inline-flex'; setTimeout(()=>{ gameCard.scrollTop = 0; }, 50); }
 function showResult(){ homeEl.style.display='none'; gameEl.style.display='none'; resultEl.style.display='block'; scoreDisplay.style.display='none'; soundBtn.style.display='inline-flex'; gameCard.style.paddingBottom='16px'; setTimeout(()=>{ gameCard.scrollTop = 0; }, 50); }
 
-/* chat append helpers */
+/* chat append */
 function appendNpcWithTyping(text, avatar){
   if(!dangerBoard.innerText) dangerBoard.innerText='暫無危險提示';
   const row=document.createElement('div'); row.className='msgRow';
@@ -345,10 +308,10 @@ function appendNpcWithTyping(text, avatar){
   bubble.style.border = `2px solid ${rgba(darken(col,0.18),0.22)}`;
   row.appendChild(avatarWrap); row.appendChild(bubble); chatArea.appendChild(row);
   const base=600, perChar=30, maxTime=2200; const time=Math.min(base + (text.length * perChar), maxTime);
-  return new Promise(resolve=>{ setTimeout(()=>{ bubble.className='msgBubble npcBubble'; bubble.innerText=text; bubble.style.background = `linear-gradient(180deg, ${col}, #ffffffcc)`; bubble.style.borderLeft = `4px solid ${rgba(darken(col,0.18),0.28)}`; const nearBottom = (chatArea.scrollHeight - chatArea.scrollTop - chatArea.clientHeight) < 80; if(nearBottom) chatArea.scrollTop = chatArea.scrollHeight; safeScrollGameCardToBottom(); playSound(multiPop); resolve(); }, time); });
+  return new Promise(resolve=>{ setTimeout(()=>{ bubble.className='msgBubble npcBubble'; bubble.innerText=text; bubble.style.background = `linear-gradient(180deg, ${col}, #ffffffcc)`; bubble.style.borderLeft = `4px solid ${rgba(darken(col,0.18),0.28)}`; const nearBottom = (chatArea.scrollHeight - chatArea.scrollTop - chatArea.clientHeight) < 80; if(nearBottom) chatArea.scrollTop = chatArea.scrollHeight; playSound(multiPop); resolve(); }, time); });
 }
 
-function appendPlayer(text){ const row=document.createElement('div'); row.className='msgRow'; const bubble=document.createElement('div'); bubble.className='msgBubble playerBubble'; bubble.innerText=text; row.appendChild(bubble); row.style.justifyContent='flex-end'; chatArea.appendChild(row); chatArea.scrollTop = chatArea.scrollHeight; safeScrollGameCardToBottom(); playSound(multiPop); }
+function appendPlayer(text){ const row=document.createElement('div'); row.className='msgRow'; const bubble=document.createElement('div'); bubble.className='msgBubble playerBubble'; bubble.innerText=text; row.appendChild(bubble); row.style.justifyContent='flex-end'; chatArea.appendChild(row); chatArea.scrollTop = chatArea.scrollHeight; playSound(multiPop); }
 
 function updateScoreDisplay(){ const level=levelData[currentLevel]||{}; const cs=level.score||0; scoreDisplay.innerText=`本關分數: ${cs} | 累積分數: ${cumulativeScore}`; }
 
@@ -368,6 +331,7 @@ function loadLevel(){
   appendNpcWithTyping(level.dialogues[currentDialogue].text, level.opponent.avatar).then(()=>{});
 }
 
+/* handle choice */
 function handleChoice(isDanger){
   if(choiceMade) return;
   choiceMade=true;
@@ -383,7 +347,6 @@ function handleChoice(isDanger){
       const tip=`❌ 第${currentDialogue+1}題：${dlg.text}\n其實這是危險的，原因：${dlg.reason||'無'}\n\n`;
       dangerBoard.innerText = (dangerBoard.innerText==='暫無危險提示'?'':dangerBoard.innerText) + tip;
       dangerBoard.scrollTop = dangerBoard.scrollHeight;
-      setTimeout(()=>{ try{ safeScrollGameCardToBottom(); }catch(e){} },120);
       showToast('發現未注意到的危險 — 已在提醒區記錄',2200);
     }
     if(!dlg.danger && isDanger){
@@ -393,9 +356,12 @@ function handleChoice(isDanger){
   const btn=isDanger?dangerBtn:safeBtn;
   safeBtn.classList.remove('btn-correct','btn-wrong'); dangerBtn.classList.remove('btn-correct','btn-wrong');
   btn.classList.add(correct? 'btn-correct' : 'btn-wrong');
-  playerInput.disabled=false; playerInput.readOnly=false; playerInput.classList.remove('noCaret'); safeFocus(playerInput);
+
+  playerInput.disabled=false; playerInput.readOnly=false; playerInput.classList.remove('noCaret');
+  safeFocus(playerInput, { delay: 300 });
 }
 
+/* send input */
 function sendPlayerInput(){
   if(!choiceMade) return;
   const val=playerInput.value.trim(); if(!val) return;
@@ -415,7 +381,6 @@ function sendPlayerInput(){
     let errors=''; level.dialogues.forEach((d,i)=>{ if(d.danger && !level.answers[i]) { errors+=`❌ 第${i+1}題：${d.text} 原因：${d.reason||'無'}\n\n`; } });
     dangerBoard.innerText = errors || '本關無錯誤！';
     dangerBoard.scrollTop = dangerBoard.scrollHeight;
-    setTimeout(()=>{ try{ safeScrollGameCardToBottom(); }catch(e){} },120);
     if(currentLevel < levelData.length - 1){
       nextBtn.style.display='block'; levelEndNotice.style.display='block'; levelEndNotice.innerText='本關已結束，請按「下一關」。';
       if(window.matchMedia('(max-width:520px)').matches){ nextBtn.style.position='static'; } else { nextBtn.style.position='fixed'; gameCard.style.paddingBottom='120px'; }
@@ -429,56 +394,19 @@ function sendPlayerInput(){
   }
 }
 
-/* confetti: multiple rows */
+/* confetti */
 function showConfetti(){ confettiActive=true; confettiEl.innerHTML=''; const colors=['#ff7ab6','#ffd166','#c7f9cc','#a7d8ff','#ffd1ba','#e6d8ff']; const rows=5; const perRow=24; for(let r=0;r<rows;r++){ const delayBase = r * 120; for(let i=0;i<perRow;i++){ const e=document.createElement('div'); e.className='confetti-piece'; const left = (i/perRow*100) + (Math.random()*3); e.style.left = left + '%'; e.style.top = (-10 - r*6) + 'vh'; e.style.width = (6 + Math.random()*14) + 'px'; e.style.height = (8 + Math.random()*26) + 'px'; e.style.background = colors[Math.floor(Math.random()*colors.length)]; e.style.opacity = 0.95; e.style.transform = 'rotate('+(Math.random()*360)+'deg)'; e.style.transition = `transform 3.4s linear ${delayBase}ms, top 3.4s linear ${delayBase}ms, opacity 3.4s linear ${delayBase}ms`; confettiEl.appendChild(e); setTimeout(()=>{ try{ e.style.top = (110 + Math.random()*10) + 'vh'; e.style.transform = 'rotate('+(720+Math.random()*720)+'deg)'; e.style.opacity = 0.95; }catch(err){} }, 50 + delayBase); setTimeout(()=>{ try{ if(confettiEl.contains(e)) confettiEl.removeChild(e); }catch(err){} }, 3800 + delayBase); } } setTimeout(()=>{ confettiActive=false; gameCard.style.paddingBottom='16px'; }, 5000); }
 
 function playSound(el){ if(!soundEnabled) return; try{ const src = el && el.getAttribute && el.getAttribute('src'); if(!src) return; const s = new Audio(src); s.volume = 0.24; s.play().catch(()=>{}); }catch(e){} }
 
-function saveRecordAndShowResult(){
-  // build summary
-  let summary = '';
-  levelData.forEach((lvl, li) => {
-    lvl.dialogues.forEach((d, di) => {
-      if (d.danger) {
-        const answered = Array.isArray(lvl.answers) ? !!lvl.answers[di] : false;
-        summary += `第${li+1}關 第${di+1}題: ${d.text}\⚠️ 危險原因: ${d.reason || '無'}\n判斷: ${answered ? '✅ 你判斷為危險 (正確)' : '❌ 你判斷錯誤或未判斷為危險'}\n\n`;
-      }
-    });
-  });
+function saveRecordAndShowResult(){ let summary=''; levelData.forEach((lvl,li)=>{ lvl.dialogues.forEach((d,di)=>{ if(d.danger){ const answered=Array.isArray(lvl.answers)?!!lvl.answers[di]:false; summary+=`第${li+1}關 第${di+1}題: ${d.text}\n⚠️ 危險原因: ${d.reason||'無'}\n判斷: ${answered? '✅ 你判斷為危險 (正確)' : '❌ 你判斷錯誤或未判斷為危險'}\n\n`; } }); }); resultScore.innerText=`你的總分是：${cumulativeScore}`; const normalized = [0,20,40,60,80,100].includes(cumulativeScore) ? cumulativeScore : (cumulativeScore<20?0:(cumulativeScore<40?20:(cumulativeScore<60?40:(cumulativeScore<80?60:(cumulativeScore<100?80:100))))); const feedbacks = { 0: {title:'分數：0 — 再加油！', msg:'多注意個人資料與私密照片保護，請避免分享具有識別性的資訊。', tips:['不要分享地址、學校或比賽成績等定位資訊','遇到要求私人照片或詳細地址時應立即停止分享','使用平台內的匿名或私密設定保護個資']}, 20: {title:'分數：20 — 還可以更好', msg:'留心對方要求的個人資訊，別輕易分享。', tips:['對於不熟悉的人，保持基本禮貌但保留個資','遇到要求實體地址或私密照片時多問問題並保持距離','可使用模糊照片或不透露細節來保護隱私']}, 40: {title:'分數：40 — 做得不錯', msg:'已有警覺，但還有需要加強的地方。', tips:['注意對方是否持續索取更多私密資訊','定期檢視與刪除不必要的個人分享內容','若對方有威脅或恐嚇行為，立即停止並截圖存證']}, 60: {title:'分數：60 — 很好', msg:'有注意到多數危險訊號，繼續保持。', tips:['使用隱私設定限制看到你詳細訊息的人','當有人要求見面或索取照片時，先在平台上多聊與核實對方身分','與朋友討論可疑情況，尋求第二意見']}, 80: {title:'分數：80 — 非常棒！', msg:'已具備良好網路安全觀念。', tips:['持續維持界線，不要因為讚美或壓力而分享私密資訊','教會身邊人同樣的守則','當你發現他人受騙，提供合適協助與檢舉']}, 100: {title:'分數：100 — 完美！', msg:'完全判斷正確，恭喜你！', tips:['你已具備優秀的網路安全意識','分享這些觀念給身邊人','保持警覺心並鼓勵他人一起學習']} }; const fb = feedbacks[normalized] || feedbacks[0]; resultMsg.innerText = fb.title + '\n' + fb.msg + '\n\n建議:\n' + fb.tips.map((t,i)=>`${i+1}. ${t}`).join('\n'); dangerSummary.innerText = summary || '沒有危險對話'; if(normalized === 100){ playSound(perfectSound); showConfetti(); } showResult(); }
 
-  resultScore.innerText = `你的總分是：${cumulativeScore}`;
-
-  // normalized
-  const normalized = [0,20,40,60,80,100].includes(cumulativeScore) ? cumulativeScore :
-    (cumulativeScore<20?0:(cumulativeScore<40?20:(cumulativeScore<60?40:(cumulativeScore<80?60:(cumulativeScore<100?80:100)))));
-
-  const feedbacks = {
-    0: {title:'分數：0 — 再加油！', msg:'多注意個人資料與私密照片保護，請避免分享具有識別性的資訊。', tips:['不要分享地址、學校或比賽成績等定位資訊','遇到要求私人照片或詳細地址時應立即停止分享','使用平台內的匿名或私密設定保護個資']},
-    20: {title:'分數：20 — 還可以更好', msg:'留心對方要求的個人資訊，別輕易分享。', tips:['對於不熟悉的人，保持基本禮貌但保留個資','遇到要求實體地址或私密照片時多問問題並保持距離','可使用模糊照片或不透露細節來保護隱私']},
-    40: {title:'分數：40 — 做得不錯', msg:'已有警覺，但還有需要加強的地方。', tips:['注意對方是否持續索取更多私密資訊','定期檢視與刪除不必要的個人分享內容','若對方有威脅或恐嚇行為，立即停止並截圖存證']},
-    60: {title:'分數：60 — 很好', msg:'有注意到多數危險訊號，繼續保持。', tips:['使用隱私設定限制看到你詳細訊息的人','當有人要求見面或索取照片時，先在平台上多聊與核實對方身分','與朋友討論可疑情況，尋求第二意見']},
-    80: {title:'分數：80 — 非常棒！', msg:'已具備良好網路安全觀念。', tips:['持續維持界線，不要因為讚美或壓力而分享私密資訊','教會身邊人同樣的守則','當你發現他人受騙，提供合適協助與檢舉']},
-    100: {title:'分數：100 — 完美！', msg:'完全判斷正確，恭喜你！', tips:['你已具備優秀的網路安全意識','分享這些觀念給身邊人','保持警覺心並鼓勵他人一起學習']}
-  };
-
-  const fb = feedbacks[normalized] || feedbacks[0];
-
-  resultMsg.innerText = fb.title + '\n' + fb.msg + '\n\n建議:\n' + fb.tips.map((t,i)=>`${i+1}. ${t}`).join('\n');
-
-  dangerSummary.innerText = summary || '沒有危險對話';
-
-  if (normalized === 100) {
-    playSound(perfectSound);
-    showConfetti();
-  }
-
-  showResult();
-}
-
+/* toast */
 function showToast(msg,duration=3000){ let t=document.getElementById('toast'); if(!t){ t=document.createElement('div'); t.id='toast'; t.style.position='fixed'; t.style.left='50%'; t.style.bottom='24px'; t.style.transform='translateX(-50%)'; t.style.background='rgba(36,19,50,0.95)'; t.style.color='#fff'; t.style.padding='10px 14px'; t.style.borderRadius='12px'; t.style.zIndex=9999; document.body.appendChild(t); } t.innerText=msg; t.style.display='block'; clearTimeout(t._timer); t._timer=setTimeout(()=>{ t.style.display='none'; }, duration); }
 
 /* events */
-startBtn.addEventListener('click', ()=>{
+const startBtnEl = document.getElementById('startBtn');
+startBtnEl.addEventListener('click', ()=>{
   levelData.forEach(l=>{ l.answers=[]; l.score=0; });
   currentLevel=0; currentDialogue=0; choiceMade=false; cumulativeScore=0;
   soundEnabled = true;
@@ -502,27 +430,9 @@ restartFinalBtn.addEventListener('click', ()=>{ levelData.forEach(l=>{ l.answers
 /* init */
 renderHomeAvatars(); showHome();
 
-/* window resize behavior */
+/* resize safety */
 window.addEventListener('resize', ()=>{ try{ if(nextBtn.style.display==='block' && nextBtn.dataset.type){ if(!window.matchMedia('(max-width:520px)').matches) gameCard.style.paddingBottom='120px'; } }catch(e){} });
 
-/* Extra runtime safety for mobile landscape: when layout is small, avoid forcing fixed-positioned elements */
-(function(){
-  function adjustForLandscape(){
-    const next = document.getElementById('nextBtn');
-    if(!next) return;
-    const isLandscape = window.matchMedia('(orientation: landscape)').matches;
-    if(isLandscape && window.innerWidth <= 900 && window.innerHeight <= 520){
-      next.style.position = 'static';
-      next.style.right = 'auto';
-      next.style.bottom = 'auto';
-    } else {
-      next.style.position = '';
-    }
-  }
-  window.addEventListener('load', adjustForLandscape);
-  window.addEventListener('resize', adjustForLandscape);
-  window.addEventListener('orientationchange', adjustForLandscape);
-})();
 </script>
 </body>
 </html>
