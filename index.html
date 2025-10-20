@@ -35,7 +35,7 @@
   .home-avatar .label{ display:block; font-size:12px; color:var(--muted); margin-top:6px; text-align:center }
   #startBtn{ padding:12px 18px; border-radius:12px; font-weight:800; background:linear-gradient(90deg,#ffd6a5,#fff0d6); color:var(--text); border:1px solid rgba(0,0,0,0.06); box-shadow:0 8px 26px rgba(111,66,193,0.06); cursor:pointer }
 
-  /* header - desktop: left avatar/name, center title, right score+sound */
+  /* header */
   #opponentHeader{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px; border:1px solid var(--border-strong); background:linear-gradient(180deg,#fff,#fffaf6); flex-wrap:nowrap}
   .op-left{display:flex;align-items:center;gap:12px; flex-shrink:0; min-width:0}
   .op-avatar{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px; box-shadow:0 6px 18px rgba(36,19,50,0.04); border:1px solid var(--border-strong); flex-shrink:0;}
@@ -68,7 +68,7 @@
   .dots span{ display:inline-block; width:8px; height:8px; border-radius:50%; background:rgba(36,19,50,0.16); transform:translateY(0); animation:dot 1s infinite; }
   @keyframes dot{ 0%{opacity:0.3; transform:translateY(0);} 50%{opacity:1; transform:translateY(-6px);} 100%{opacity:0.3; transform:translateY(0);} }
 
-  /* controls - default: inline; mobile reflow below */
+  /* controls */
   #controlArea{display:flex; gap:10px; align-items:center; padding:10px 0; flex-wrap:wrap}
   #playerInput{flex:1; min-width:0; padding:12px 14px;border-radius:12px;border:1px solid var(--border-strong); background:linear-gradient(180deg,#fff,#fffaf8); caret-color:var(--text); font-size:15px}
   #playerInput.noCaret{ caret-color: transparent; }
@@ -97,29 +97,27 @@
   #confetti{ position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:450 }
   .confetti-piece{ position:fixed; will-change:transform, top, opacity; border-radius:2px }
 
-  /* MOBILE: reflow header and controls per new requested order:
-     - first row: op-right (score+sound) (top)
-     - second row: op-center (title) centered
-     - third row: op-left (avatar + name) left-aligned
-     - controls: first row buttons + send, second row input full width
+  /* MOBILE layout adjustments:
+     - order: op-right (score+sound) first, op-center (title) second, op-left (avatar/name) third
+     - ensure op-right contents are right aligned (justify-content:flex-end)
+     - control area: buttons row then input full-width row
   */
   @media (max-width:520px){
-    #opponentHeader{ flex-direction:column; align-items:stretch; gap:8px; padding:10px; }
+    #opponentHeader{ flex-direction:column; align-items:stretch; gap:6px; padding:10px; }
     .op-right{ order:0; display:flex; justify-content:flex-end; align-items:center; gap:8px; width:100%; }
     .op-center{ order:1; width:100%; text-align:center; }
     .op-left{ order:2; display:flex; width:100%; justify-content:flex-start; gap:8px; }
     .op-center h2{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:15px; }
-    /* controls: buttons row first, input row second full width */
+    /* controls: buttons row first, input full-width second */
     #controlArea{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
     #safeBtn, #dangerBtn, #sendBtn { flex:0 0 auto; order:0; }
-    #playerInput{ order:1; width:100%; margin-top:6px; padding:12px; font-size:16px; border-radius:10px; }
+    #playerInput{ order:1; flex: 1 1 100%; width:100%; margin-top:6px; padding:12px; font-size:16px; border-radius:10px; }
     .btnLabel{ margin-left:6px; font-size:13px; }
     .btnIcon{ width:26px; height:26px; font-size:13px; }
-    /* ensure chat bubbles fit */
     .msgBubble, .typingBubble { max-width: calc(100vw - 48px); }
   }
 
-  /* small landscape safety */
+  /* landscape tweak */
   @media (max-width:760px) and (orientation: landscape) {
     #opponentHeader { gap:6px; padding:8px; }
     .op-center h2 { font-size:14px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
@@ -128,7 +126,6 @@
     #nextBtn{ position:static; }
   }
 
-  /* small visual hint for safeFocus */
   #playerInput.focus-hint { box-shadow: 0 0 0 8px rgba(99,102,241,0.08); transition: box-shadow 0.28s; }
 </style>
 </head>
@@ -155,16 +152,16 @@
       <div id="game" style="display:none" aria-labelledby="levelTitle">
 
         <div id="opponentHeader">
-          <!-- op-right: first row on mobile (top) -->
+          <!-- first row on mobile (score+sound) -->
           <div class="op-right">
             <div id="scoreDisplay">本關分數: 0 | 累積分數: 0</div>
             <button id="soundBtn" class="sound-inline muted" title="切換音效"><span id="soundIcon">🔇</span></button>
           </div>
 
-          <!-- op-center: second row on mobile (centered title) -->
+          <!-- second row on mobile (title) -->
           <div class="op-center"><h2 id="levelTitle">關卡</h2></div>
 
-          <!-- op-left: third row on mobile (avatar + name, left) -->
+          <!-- third row on mobile (avatar+name) -->
           <div class="op-left">
             <div id="opAvatar" class="op-avatar">🐱</div>
             <div style="display:flex; flex-direction:column;">
@@ -209,7 +206,7 @@
 
 <div id="confetti"></div>
 
-<!-- Audios (請確認 assets/audio/ 底下有對應檔案) -->
+<!-- Audios -->
 <audio id="bgMusic" loop src="assets/audio/strawberry-358303.mp3"></audio>
 <audio id="correctSound" src="assets/audio/correct.mp3"></audio>
 <audio id="wrongSound" src="assets/audio/error.mp3"></audio>
@@ -217,32 +214,32 @@
 <audio id="multiPop" src="assets/audio/multi-pop.mp3"></audio>
 
 <script>
-/* 關卡資料與既有邏輯（與你現有功能一致） */
+/* 資料與狀態（保持既有行為） */
 const levelData = [
   { title:'第一關', opponent:{name:'網友1', avatar:'🐱', color:'#ffcced'}, dialogues:[
-      { text:'嗨！剛剛看到你分享的跑步照片，很有活力，你常去哪裡跑步？', danger:false },
-      { text:'我上週參加學校的路跑，想知道你平常訓練怎麼安排？', danger:false },
-      { text:'可以把你的比賽成績給我看看嗎？我想比較一下。', danger:true, reason:'比賽成績屬個人資訊，可能被用來評價或追蹤' }
+      { text:'嗨！剛剛看到你分享的跑步照片，很有活力呢!', danger:false },
+      { text:'其實我也想建立跑步的習慣，但常常會懶惰', danger:false },
+      { text:'你家住哪裡呀？近的話可以約出來一起跑，這樣也有個伴互相激勵！', danger:true, reason:'詢問個人基本資料不適合公開+網友見面風險' }
     ], answers:[], score:0 },
   { title:'第二關', opponent:{name:'網友2', avatar:'🐶', color:'#bfeaff'}, dialogues:[
-      { text:'嗨～今天有沒有發生什麼好玩的事？', danger:false },
-      { text:'我跟朋友想週末去附近那家咖啡廳，你會去嗎？', danger:false },
-      { text:'如果你住附近，可以拍一下你家外面的街景給我看嗎？', danger:false }
+      { text:'嗨～我們學校最近快要考期中考了，你們也是嗎？', danger:false },
+      { text:'一起加油吧💪', danger:false },
+      { text:'那先不聊了，我們趕快讀書吧！', danger:false }
     ], answers:[], score:0 },
   { title:'第三關', opponent:{name:'網友3', avatar:'🦊', color:'#c8facc'}, dialogues:[
       { text:'你的自拍很有特色，最近在用哪個濾鏡？', danger:false },
       { text:'可以給我一張你單獨的私密自拍嗎？我很想看真實的你～', danger:true, reason:'要求私人照片可能導致濫用或外流' },
-      { text:'如果不方便也沒關係，我們可以多聊聊興趣。', danger:false }
+      { text:'如果不方便也沒關係，我們可以多聊聊興趣！', danger:false }
     ], answers:[], score:0 },
   { title:'第四關', opponent:{name:'網友4', avatar:'🐼', color:'#fff6b3'}, dialogues:[
       { text:'嗨，我們隊缺一個隊友玩合作遊戲，你想加入嗎？', danger:false },
-      { text:'我們通常周末練一小時，大家都很友善。', danger:false },
+      { text:'我們通常周末練一小時，大家都很友善', danger:false },
       { text:'請問你的遊戲暱稱是什麼？（不是帳號或密碼）', danger:false }
     ], answers:[], score:0 },
   { title:'第五關', opponent:{name:'網友5', avatar:'🦄', color:'#ffd1ba'}, dialogues:[
-      { text:'你最近最喜歡的科目是什麼？', danger:false },
-      { text:'這周末有社團活動，會有很多同學出席，想一塊去嗎？', danger:false },
-      { text:'你現在有在交往嗎？可以告訴我對方的名字嗎？', danger:true, reason:'詢問感情私人資訊不適合公開' }
+      { text:'最近失戀了，真難受😭', danger:false },
+      { text:'還好有家人、朋友的陪伴跟安慰', danger:false },
+      { text:'對了，好奇你現在有在交往嗎？可以告訴我對方的名字嗎？', danger:true, reason:'詢問感情私人資訊不適合公開' }
     ], answers:[], score:0 }
 ];
 
